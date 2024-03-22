@@ -1,9 +1,9 @@
-package gtxcs1332x.module1;
+package gtxcs1332x.module1.recursion;
 
 /**
  * @author jolly
  */
-public class Recursion {
+public class ValidSubsequence {
     private static final int[] a = new int[]{1,7,3,5,2,8,10,24,-1,-5,4};
 
     private static int isValidSubsequence(int[] arr, int curr, int lastIdx, int aCurr) {
