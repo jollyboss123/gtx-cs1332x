@@ -1,12 +1,14 @@
 package gtxcs1332x.module2;
 
+import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * @author jolly
  */
-public class SinglyLinkedList<T> implements Iterable<T> {
+public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
 
     private static class Node<T> {
         private T data;
@@ -162,6 +164,58 @@ public class SinglyLinkedList<T> implements Iterable<T> {
         size--;
     }
 
+    // assuming linked list in sorted order
+    public void removeDuplicates() {
+        // iteration method
+//        if (head == null) {
+//            return;
+//        }
+//        Node<T> curr = head;
+//        Node<T> prev = head;
+//        while (curr.next != null) {
+//            assert prev != null;
+//            if (prev.data.compareTo(curr.data) == 0) {
+//                assert prev.next != null;
+//                prev.next = prev.next.next;
+//            } else {
+//                prev = prev.next;
+//                continue;
+//            }
+//            if (prev.next != null) {
+//                curr = prev.next;
+//            }
+//        }
+
+        // recursion
+//        Node<T> curr = head;
+//        reRemove(curr, curr.next);
+        head = rRemove(head);
+    }
+
+//    private void reRemove(Node<T> curr, Node<T> next) {
+//        if (curr == null || next == null) {
+//            return;
+//        }
+//        if (curr.data.compareTo(next.data) != 0) {
+//            compare(curr.next, curr.next.next);
+//        } else {
+//            curr.next = curr.next.next;
+//            compare(curr, curr.next);
+//        }
+//    }
+
+    // recursion with pointer reinforcement
+    private Node<T> rRemove(Node<T> curr) {
+        if (curr == null) {
+            return null;
+        }
+        curr.next = rRemove(curr.next);
+        if (curr.next != null && curr.data.compareTo(curr.next.data) == 0) {
+            return curr.next;
+        }
+        return curr;
+    }
+
     @Override
     public String toString() {
         StringBuilder answer = new StringBuilder();
@@ -188,7 +242,13 @@ public class SinglyLinkedList<T> implements Iterable<T> {
         sll.addToBack(4);
         sll.addToBack(5);
         sll.addAt(2, 3);
-//        System.out.println(sll);
+        sll.addAt(2, 3);
+        sll.addAt(2, 3);
+        sll.addToBack(5);
+        sll.addToFront(1);
+        System.out.println(sll);
+        sll.removeDuplicates();
+        System.out.println(sll);
 //        sll.addAt(4, 6);
 //        System.out.println(sll);
 //        sll.removeAt(4);
@@ -201,13 +261,13 @@ public class SinglyLinkedList<T> implements Iterable<T> {
 //        System.out.println(sll.size);
 //        sll.removeFromFront();
 //        System.out.println(sll.size);
-        for (var i : sll) {
-            System.out.println(i);
-        }
-
-        var iterator = sll.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-        }
+//        for (var i : sll) {
+//            System.out.println(i);
+//        }
+//
+//        var iterator = sll.iterator();
+//        while (iterator.hasNext()) {
+//            System.out.println(iterator.next());
+//        }
     }
 }
