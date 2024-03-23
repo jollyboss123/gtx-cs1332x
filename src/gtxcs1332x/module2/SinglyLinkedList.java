@@ -1,7 +1,5 @@
 package gtxcs1332x.module2;
 
-import java.nio.file.Path;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -88,6 +86,10 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
     }
 
     public void addAt(int index, T data) {
+        if (index > size) {
+            throw new NoSuchElementException();
+        }
+
         if (index == 0) {
             addToFront(data);
             return;
@@ -141,7 +143,7 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
     }
 
     public void removeAt(int index) {
-        if (index > size) {
+        if (index >= size) {
             throw new NoSuchElementException();
         }
         if (index == 0) {
@@ -211,6 +213,7 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
         }
         curr.next = rRemove(curr.next);
         if (curr.next != null && curr.data.compareTo(curr.next.data) == 0) {
+            size--;
             return curr.next;
         }
         return curr;
