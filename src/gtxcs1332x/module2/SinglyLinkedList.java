@@ -115,10 +115,17 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
     }
 
     public void removeFromFront() {
-        if (size != 0) {
-            head = head.next;
-            size--;
+        if (size == 0) {
+            return;
         }
+        if (size == 1) {
+            head = null;
+            tail = null;
+            size--;
+            return;
+        }
+        head = head.next;
+        size--;
     }
 
     public void removeFromBack() {
@@ -264,9 +271,9 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
 //        System.out.println(sll.size);
 //        sll.removeFromFront();
 //        System.out.println(sll.size);
-//        for (var i : sll) {
-//            System.out.println(i);
-//        }
+        for (var i : sll) {
+            System.out.println(i);
+        }
 //
 //        var iterator = sll.iterator();
 //        while (iterator.hasNext()) {

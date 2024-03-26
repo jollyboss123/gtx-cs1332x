@@ -102,6 +102,9 @@ public class DoublyLinkedList<T extends Comparable<T>> implements Iterable<T> {
             addToBack(data);
             return;
         }
+        // can optimize this to O(n/2) by splitting the list in half
+        // and traverse from head if index is smaller than list size / 2
+        // else traverse from tail
         Node<T> curr = head;
         Node<T> next = null;
         Node<T> newNode = new Node<>(data);
@@ -164,6 +167,9 @@ public class DoublyLinkedList<T extends Comparable<T>> implements Iterable<T> {
             return;
         }
 
+        // can optimize this to O(n/2) by splitting the list in half
+        // and traverse from head if index is smaller than list size / 2
+        // else traverse from tail
         Node<T> curr = head;
         int i = 0;
         while (curr.next != null && i < index - 1) {

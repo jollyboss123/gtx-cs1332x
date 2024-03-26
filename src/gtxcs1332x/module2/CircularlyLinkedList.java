@@ -1,11 +1,12 @@
 package gtxcs1332x.module2;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * @author jolly
  */
-public class CircularlyLinkedList<T> {
+public class CircularlyLinkedList<T> implements Iterable<T> {
     private static class Node<T> {
         private T data;
         private Node<T> next;
@@ -26,6 +27,40 @@ public class CircularlyLinkedList<T> {
         @Override
         public String toString() {
             return data.toString();
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new CLLIterator();
+    }
+
+    private class CLLIterator implements Iterator<T> {
+        private Node<T> curr;
+        private boolean firstIteration;
+
+        CLLIterator() {
+            curr = head;
+            firstIteration = true;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (firstIteration) {
+                return curr != null;
+            }
+            return curr != head;
+        }
+
+        @Override
+        public T next() {
+            if (hasNext()) {
+                firstIteration = false;
+                T temp = curr.data;
+                curr = curr.next;
+                return temp;
+            }
+            throw new NoSuchElementException();
         }
     }
 
@@ -200,32 +235,27 @@ public class CircularlyLinkedList<T> {
 
     public static void main(String[] args) {
         CircularlyLinkedList<Integer> cll = new CircularlyLinkedList<>();
-        cll.addToFront(1);
-        cll.addToFront(2);
-        cll.addToFront(3);
-        cll.addToFront(4);
+//        cll.addToFront(1);
+//        cll.addToFront(2);
+//        cll.addToFront(3);
+//        cll.addToFront(4);
         cll.addToBack(1);
         cll.addToBack(2);
         cll.addToBack(3);
         cll.addToBack(4);
-        System.out.println(cll);
-//        cll.removeFromFront();
 //        System.out.println(cll);
-//        cll.removeFromFront();
+//        cll.removeFromBack();
 //        System.out.println(cll);
-//        cll.removeFromFront();
-//        cll.removeFromFront();
-//        cll.removeFromFront();
-//        cll.removeFromFront();
-        cll.removeFromBack();
+//        cll.removeFromBack();
+//        System.out.println(cll);
+//        cll.removeAt(3);
+//        cll.removeAt(3);
+//        System.out.println(cll);
+//        cll.addAt(3, 1);
+//        cll.addAt(3, 2);
         System.out.println(cll);
-        cll.removeFromBack();
-        System.out.println(cll);
-        cll.removeAt(3);
-        cll.removeAt(3);
-        System.out.println(cll);
-        cll.addAt(3, 1);
-        cll.addAt(3, 2);
-        System.out.println(cll);
+        for (var i : cll) {
+            System.out.println(i);
+        }
     }
 }
