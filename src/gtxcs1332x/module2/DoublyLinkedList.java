@@ -123,35 +123,43 @@ public class DoublyLinkedList<T extends Comparable<T>> implements Iterable<T> {
         size++;
     }
 
-    public void removeFromFront() {
+    public T removeFromFront() {
         if (size == 0) {
-            return;
+            throw new NoSuchElementException();
         }
+        T temp;
         if (size == 1) {
             head = null;
             tail = null;
+            temp = null;
         } else {
+            temp = head.data;
             Node<T> newHead = head.next;
             newHead.prev = null;
             head = newHead;
         }
         size--;
+        return temp;
     }
 
     // O(1) T
-    public void removeFromBack() {
+    public T removeFromBack() {
         if (size == 0) {
-            return;
+            throw new NoSuchElementException();
         }
+        T temp;
         if (size == 1) {
             head = null;
             tail = null;
+            temp = null;
         } else {
+            temp = tail.data;
             Node<T> newTail = tail.prev;
             newTail.next = null;
             tail = newTail;
         }
         size--;
+        return temp;
     }
 
     public void removeAt(int index) {
@@ -185,6 +193,14 @@ public class DoublyLinkedList<T extends Comparable<T>> implements Iterable<T> {
 
     public void removeDuplicates() {
         head = rRemove(head);
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size <= 0;
     }
 
     private Node<T> rRemove(Node<T> curr) {
