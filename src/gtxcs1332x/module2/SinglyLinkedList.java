@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  */
 public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
 
-    private static class Node<T> {
+    public static class Node<T> {
         private T data;
         private Node<T> next;
 
@@ -19,6 +19,18 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
 
         private Node(T data) {
             this(data, null);
+        }
+
+        public T data() {
+            return data;
+        }
+
+        public Node<T> next() {
+            return next;
+        }
+
+        public void setNext(Node<T> next) {
+            this.next = next;
         }
 
         @Override
@@ -114,29 +126,31 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
         size++;
     }
 
-    public void removeFromFront() {
+    public T removeFromFront() {
         if (size == 0) {
-            return;
+            throw new NoSuchElementException();
         }
         if (size == 1) {
             head = null;
             tail = null;
             size--;
-            return;
+            return null;
         }
+        T temp = head.data;
         head = head.next;
         size--;
+        return temp;
     }
 
-    public void removeFromBack() {
+    public T removeFromBack() {
         if (size == 0) {
-            return;
+            throw new NoSuchElementException();
         }
         if (size == 1) {
             head = null;
             tail = null;
             size--;
-            return;
+            return null;
         }
 
         Node<T> curr = head;
@@ -144,22 +158,22 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
         while (curr.next.next != null) {
             curr = curr.next;
         }
+        T temp = curr.next.data;
         curr.next = null;
         tail = curr;
         size--;
+        return temp;
     }
 
-    public void removeAt(int index) {
+    public T removeAt(int index) {
         if (index >= size) {
             throw new NoSuchElementException();
         }
         if (index == 0) {
-            removeFromFront();
-            return;
+            return removeFromFront();
         }
         if (index == size - 1) {
-            removeFromBack();
-            return;
+            return removeFromBack();
         }
 
         Node<T> curr = head;
@@ -169,8 +183,10 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
             i++;
         }
         assert curr.next != null;
+        T temp = curr.next.data;
         curr.next = curr.next.next;
         size--;
+        return temp;
     }
 
     // assuming linked list in sorted order
@@ -224,6 +240,18 @@ public class SinglyLinkedList<T extends Comparable<T>> implements Iterable<T> {
             return curr.next;
         }
         return curr;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public Node<T> head() {
+        return head;
+    }
+
+    public void clear() {
+        head = null;
     }
 
     @Override

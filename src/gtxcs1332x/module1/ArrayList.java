@@ -157,6 +157,20 @@ public class ArrayList<T> {
         return size;
     }
 
+    public T get(int index) {
+        if (index >= size) {
+            throw new NoSuchElementException();
+        }
+        return backingArray[index];
+    }
+
+    public void clear() {
+        size = 0;
+        // to allow the gc to take care of clearing away
+        // the old data in O(1) T
+        backingArray = (T[]) new Object[0];
+    }
+
     private int extendCapacity() {
         int cap = backingArray.length * 2;
         T[] arr = (T[]) new Object[cap];
