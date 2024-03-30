@@ -34,6 +34,9 @@ public class ArrayQueue<T> {
         backingArray[front] = null;
         front = ++front % backingArray.length;
         size--;
+        if (isEmpty()) {
+            front = 0;
+        }
         return temp;
     }
 
