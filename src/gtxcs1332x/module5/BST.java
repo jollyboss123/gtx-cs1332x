@@ -205,9 +205,9 @@ public class BST<T extends Comparable<? super T>> {
             throw new RuntimeException();
         }
 
-        // Test case 3: Removing a node with one child (3)
-        r = bst.remove(3);
-        if (!r.equals(3)) {
+        // Test case 3: Removing a node with one child (7)
+        r = bst.remove(7);
+        if (!r.equals(7)) {
             System.out.println(r);
             throw new RuntimeException();
         }
@@ -215,19 +215,19 @@ public class BST<T extends Comparable<? super T>> {
             throw new RuntimeException();
         }
         preorderResult = traversals.preorder(bst.getRoot());
-        if (!preorderResult.equals(List.of(5, 4, 2, 7, 6))) {
+        if (!preorderResult.equals(List.of(5, 3, 2, 4, 6))) {
             System.out.println("preorder traversal: " + preorderResult);
             throw new RuntimeException();
         }
         inorderResult = traversals.inorder(bst.getRoot());
-        if (!inorderResult.equals(List.of(2, 4, 5, 6, 7))) {
+        if (!inorderResult.equals(List.of(2, 3, 4, 5, 6))) {
             System.out.println("inorder traversal: " + inorderResult);
             throw new RuntimeException();
         }
 
-        // Test case 4: Removing a node with two children (5)
-        r = bst.remove(5);
-        if (!r.equals(5)) {
+        // Test case 4: Removing a node with two children (3)
+        r = bst.remove(3);
+        if (!r.equals(3)) {
             System.out.println(r);
             throw new RuntimeException();
         }
@@ -235,12 +235,12 @@ public class BST<T extends Comparable<? super T>> {
             throw new RuntimeException();
         }
         preorderResult = traversals.preorder(bst.getRoot());
-        if (!preorderResult.equals(List.of(6, 4, 2, 7))) {
+        if (!preorderResult.equals(List.of(5, 4, 2, 6))) {
             System.out.println("preorder traversal: " + preorderResult);
             throw new RuntimeException();
         }
         inorderResult = traversals.inorder(bst.getRoot());
-        if (!inorderResult.equals(List.of(2, 4, 6, 7))) {
+        if (!inorderResult.equals(List.of(2, 4, 5, 6))) {
             System.out.println("inorder traversal: " + inorderResult);
             throw new RuntimeException();
         }
