@@ -56,6 +56,36 @@ public class BST<T extends Comparable<? super T>> {
     }
 
     /**
+     * Returns whether or not data matching the given parameter is contained
+     * within the tree.
+     *
+     * This should be done recursively.
+     *
+     * Hint: Should you use value equality or reference equality?
+     *
+     * Must be O(log n) for best and average cases and O(n) for worst case.
+     *
+     * @param data The data to search for. You may assume data is never null.
+     * @return true if the parameter is contained within the tree, false otherwise.
+     */
+    public boolean contains(T data) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        return rContains(root, data) != null;
+    }
+
+    private BSTNode<T> rContains(BSTNode<T> curr, T data) {
+        if (curr == null) {
+            return null;
+        } else if (data.compareTo(curr.getData()) < 0) {
+            return rContains(curr.getLeft(), data);
+        } else if (data.compareTo(curr.getData()) > 0) {
+            return rContains(curr.getRight(), data);
+        } else {
+            return curr;
+        }
+    }
+
+    /**
      * Removes and returns the data from the tree matching the given parameter.
      *
      * This must be done recursively.
@@ -171,6 +201,18 @@ public class BST<T extends Comparable<? super T>> {
         }
         if (bst.size() != 7) {
             System.out.println(bst.size());
+            throw new RuntimeException();
+        }
+        if (!bst.contains(7)) {
+            throw new RuntimeException();
+        }
+        if (!bst.contains(8)) {
+            throw new RuntimeException();
+        }
+        if (!bst.contains(5)) {
+            throw new RuntimeException();
+        }
+        if (bst.contains(9)) {
             throw new RuntimeException();
         }
         Traversals<Integer> traversals = new Traversals<>();

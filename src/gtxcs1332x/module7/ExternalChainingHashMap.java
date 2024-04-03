@@ -86,7 +86,6 @@ public class ExternalChainingHashMap<K, V> {
 
         // collision
         if (table[i] != null) {
-            // chain
             ExternalChainingMapEntry<K, V> curr = table[i];
             while (curr != null) {
                 // duplicated key
