@@ -214,6 +214,30 @@ public class ExternalChainingHashMap<K, V> {
     }
 
     /**
+     * Returns whether or not the key is in the map.
+     *
+     * @param key The key to search for in the map. You may assume that the
+     *            key is never null.
+     * @return true if the key is contained within the map, false otherwise.
+     */
+    public boolean containsKey(K key) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        int i = index(key, table);
+        if (table[i] == null) {
+            return false;
+        }
+
+        ExternalChainingMapEntry<K, V> curr = table[i];
+        while (curr != null) {
+            if (curr.getKey().equals(key)) {
+                return true;
+            }
+            curr = curr.getNext();
+        }
+        return false;
+    }
+
+    /**
      * Helper method stub for resizing the backing table to length.
      *
      * This method should be called in put() if the backing table needs to
@@ -365,6 +389,9 @@ public class ExternalChainingHashMap<K, V> {
         if (v != null) {
             throw new RuntimeException();
         }
+        if (!map.containsKey(1)) {
+            throw new RuntimeException();
+        }
         if (!map.get(1).equals("red apple")) {
             throw new RuntimeException();
         }
@@ -398,6 +425,9 @@ public class ExternalChainingHashMap<K, V> {
         if (v != null) {
             throw new RuntimeException();
         }
+        if (!map.containsKey(26)) {
+            throw new RuntimeException();
+        }
         if (!map.get(26).equals("key2")) {
             throw new RuntimeException();
         }
@@ -405,11 +435,17 @@ public class ExternalChainingHashMap<K, V> {
         if (v != null) {
             throw new RuntimeException();
         }
+        if (!map.containsKey(39)) {
+            throw new RuntimeException();
+        }
         if (!map.get(39).equals("key3")) {
             throw new RuntimeException();
         }
         v = map.put(52, "key4");
         if (v != null) {
+            throw new RuntimeException();
+        }
+        if (!map.containsKey(52)) {
             throw new RuntimeException();
         }
         if (!map.get(52).equals("key4")) {
