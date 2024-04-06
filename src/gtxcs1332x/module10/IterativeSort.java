@@ -36,6 +36,18 @@ public class IterativeSort<T extends Comparable<T>> {
         }
     }
 
+    public void selection(T[] arr) {
+        for (int i = arr.length - 1; i >= 1; i--) {
+            int maxIdx = 0;
+            for (int n = 0; n <= i; n++) {
+                if (arr[n].compareTo(arr[maxIdx]) > 0) {
+                    maxIdx = n;
+                }
+            }
+            swap(arr, i, maxIdx);
+        }
+    }
+
     private void swap(T[] arr, int i1, int i2) {
         if (arr.length == 0) {
             throw new NoSuchElementException();
@@ -62,15 +74,25 @@ public class IterativeSort<T extends Comparable<T>> {
             Integer[] input = c.getKey();
             sort.bubble(input);
             if (!Arrays.equals(input, c.getValue())) {
-                System.out.println("original: " + Arrays.toString(c.getKey()) + "\n output: " + Arrays.toString(input));
+                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
                 throw new RuntimeException();
             }
         }
+
         for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
             Integer[] input = c.getKey();
             sort.insertion(input);
             if (!Arrays.equals(input, c.getValue())) {
-                System.out.println("original: " + Arrays.toString(c.getKey()) + "\n output: " + Arrays.toString(input));
+                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
+                throw new RuntimeException();
+            }
+        }
+
+        for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
+            Integer[] input = c.getKey();
+            sort.selection(input);
+            if (!Arrays.equals(input, c.getValue())) {
+                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
                 throw new RuntimeException();
             }
         }

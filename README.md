@@ -18,4 +18,5 @@
 #### [AVL tree](https://github.com/jollyboss123/gtx-cs1332x/blob/main/src/gtxcs1332x/module8/AVL.java)
 #### [Bubble sort](https://github.com/jollyboss123/gtx-cs1332x/blob/main/src/gtxcs1332x/module10/IterativeSort.java)
 #### [Insertion sort](https://github.com/jollyboss123/gtx-cs1332x/blob/main/src/gtxcs1332x/module10/IterativeSort.java)
+#### [Selection sort](https://github.com/jollyboss123/gtx-cs1332x/blob/main/src/gtxcs1332x/module10/IterativeSort.java)
 
