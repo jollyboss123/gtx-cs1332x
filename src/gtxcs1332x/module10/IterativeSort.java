@@ -1,6 +1,8 @@
 package gtxcs1332x.module10;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
@@ -24,9 +26,25 @@ public class IterativeSort<T extends Comparable<T>> {
         }
     }
 
+    public void insertion(T[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int n = i;
+            while (n != 0 && (arr[n].compareTo(arr[n-1]) < 0)) {
+                swap(arr, n, n-1);
+                n--;
+            }
+        }
+    }
+
     private void swap(T[] arr, int i1, int i2) {
         if (arr.length == 0) {
             throw new NoSuchElementException();
+        }
+        if (i1 >= arr.length) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        if (i2 >= arr.length) {
+            throw new ArrayIndexOutOfBoundsException();
         }
         T temp = arr[i1];
         T temp2 = arr[i2];
@@ -35,19 +53,26 @@ public class IterativeSort<T extends Comparable<T>> {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = new Integer[]{2,3,4,5,1};
-        IterativeSort<Integer> sort = new IterativeSort<>();
-        sort.bubble(arr);
-        if (!Arrays.equals(arr, new Integer[]{1, 2, 3, 4, 5})) {
-            System.out.println(Arrays.toString(arr));
-            throw new RuntimeException();
-        }
+        Map<Integer[], Integer[]> cases = new HashMap<>();
+        cases.put(new Integer[]{2,3,4,5,1}, new Integer[]{1,2,3,4,5});
+        cases.put(new Integer[]{5,4,3,2,1}, new Integer[]{1,2,3,4,5});
 
-        arr = new Integer[]{5,4,3,2,1};
-        sort.bubble(arr);
-        if (!Arrays.equals(arr, new Integer[]{1, 2, 3, 4, 5})) {
-            System.out.println(Arrays.toString(arr));
-            throw new RuntimeException();
+        IterativeSort<Integer> sort = new IterativeSort<>();
+        for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
+            Integer[] input = c.getKey();
+            sort.bubble(input);
+            if (!Arrays.equals(input, c.getValue())) {
+                System.out.println("original: " + Arrays.toString(c.getKey()) + "\n output: " + Arrays.toString(input));
+                throw new RuntimeException();
+            }
+        }
+        for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
+            Integer[] input = c.getKey();
+            sort.insertion(input);
+            if (!Arrays.equals(input, c.getValue())) {
+                System.out.println("original: " + Arrays.toString(c.getKey()) + "\n output: " + Arrays.toString(input));
+                throw new RuntimeException();
+            }
         }
     }
 }
