@@ -1,14 +1,109 @@
 package gtxcs1332x.module10;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * @author jolly
  */
 public class IterativeSort<T extends Comparable<T>> {
+    /**
+     * Implement bubble sort.
+     *
+     * It should be:
+     * in-place
+     * stable
+     * adaptive
+     *
+     * Have a worst case running time of: O(n^2)
+     * And a best case running time of: O(n)
+     *
+     * NOTE: You should implement bubble sort with the last swap optimization.
+     *
+     * You may assume that the passed in array and comparator
+     * are both valid and will never be null.
+     *
+     * @param <T>        Data type to sort.
+     * @param arr        The array that must be sorted after the method runs.
+     * @param comparator The Comparator used to compare the data in arr.
+     */
+    public static <T> void bubbleSort(T[] arr, Comparator<T> comparator) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        int stop = arr.length - 1;
+
+        while (stop > 0) {
+            int last = 0;
+            int i = 0;
+            while (i < stop) {
+                if (comparator.compare(arr[i], arr[i + 1]) > 0) {
+                    swap(arr, i, i + 1);
+                    last = i;
+                }
+                i++;
+            }
+            stop = last;
+        }
+    }
+
+    /**
+     * Implement selection sort.
+     *
+     * It should be:
+     * in-place
+     * unstable
+     * not adaptive
+     *
+     * Have a worst case running time of: O(n^2)
+     * And a best case running time of: O(n^2)
+     *
+     * You may assume that the passed in array and comparator
+     * are both valid and will never be null.
+     *
+     * @param <T>        Data type to sort.
+     * @param arr        The array that must be sorted after the method runs.
+     * @param comparator The Comparator used to compare the data in arr.
+     */
+    public static <T> void selectionSort(T[] arr, Comparator<T> comparator) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        for (int i = arr.length - 1; i >= 1; i--) {
+            int maxIdx = 0;
+            for (int n = 1; n <= i; n++) {
+                if (comparator.compare(arr[n], arr[maxIdx]) > 0) {
+                    maxIdx = n;
+                }
+            }
+            swap(arr, i, maxIdx);
+        }
+    }
+
+    /**
+     * Implement insertion sort.
+     *
+     * It should be:
+     * in-place
+     * stable
+     * adaptive
+     *
+     * Have a worst case running time of: O(n^2)
+     * And a best case running time of: O(n)
+     *
+     * You may assume that the passed in array and comparator
+     * are both valid and will never be null.
+     *
+     * @param <T>        Data type to sort.
+     * @param arr        The array that must be sorted after the method runs.
+     * @param comparator The Comparator used to compare the data in arr.
+     */
+    public static <T> void insertionSort(T[] arr, Comparator<T> comparator) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        for (int i = 1; i < arr.length; i++) {
+            int n = i;
+            while (n != 0 && (comparator.compare(arr[n], arr[n-1]) < 0)) {
+                swap(arr, n, n-1);
+                n--;
+            }
+        }
+    }
+
     /**
      * Bubbles the maximum item to the end of the subarray. The subarray's search space decreases based on
      * where the last swap occurred.
@@ -58,7 +153,7 @@ public class IterativeSort<T extends Comparable<T>> {
     public void selection(T[] arr) {
         for (int i = arr.length - 1; i >= 1; i--) {
             int maxIdx = 0;
-            for (int n = 0; n <= i; n++) {
+            for (int n = 1; n <= i; n++) {
                 if (arr[n].compareTo(arr[maxIdx]) > 0) {
                     maxIdx = n;
                 }
@@ -97,7 +192,7 @@ public class IterativeSort<T extends Comparable<T>> {
         }
     }
 
-    private void swap(T[] arr, int i1, int i2) {
+    private static <T> void swap(T[] arr, int i1, int i2) {
         if (arr.length == 0) {
             throw new NoSuchElementException();
         }
@@ -125,35 +220,30 @@ public class IterativeSort<T extends Comparable<T>> {
         for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
             Integer[] input = Arrays.copyOf(c.getKey(), c.getKey().length);
             sort.bubble(input);
-            if (!Arrays.equals(input, c.getValue())) {
-                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
-                throw new RuntimeException();
-            }
+            verify(c, input);
             System.out.println("bubble passed: " + Arrays.toString(c.getKey()));
 
             input = Arrays.copyOf(c.getKey(), c.getKey().length);
             sort.insertion(input);
-            if (!Arrays.equals(input, c.getValue())) {
-                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
-                throw new RuntimeException();
-            }
+            verify(c, input);
             System.out.println("insertion passed: " + Arrays.toString(c.getKey()));
 
             input = Arrays.copyOf(c.getKey(), c.getKey().length);
             sort.selection(input);
-            if (!Arrays.equals(input, c.getValue())) {
-                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
-                throw new RuntimeException();
-            }
+            verify(c, input);
             System.out.println("selection passed: " + Arrays.toString(c.getKey()));
 
             input = Arrays.copyOf(c.getKey(), c.getKey().length);
             sort.cocktailShaker(input);
-            if (!Arrays.equals(input, c.getValue())) {
-                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
-                throw new RuntimeException();
-            }
+            verify(c, input);
             System.out.println("cocktail shaker passed: " + Arrays.toString(c.getKey()));
+        }
+    }
+
+    private static void verify(Map.Entry<Integer[], Integer[]> c, Integer[] input) {
+        if (!Arrays.equals(input, c.getValue())) {
+            System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
+            throw new RuntimeException();
         }
     }
 }
