@@ -1,6 +1,7 @@
 package gtxcs1332x.module11;
 
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * @author jolly
@@ -91,10 +92,69 @@ public class DivideAndConquerSort {
         quickSort(arr, j + 1, end, comparator);
     }
 
+    public static void lsdRadixSort(Integer[] arr) {
+        Queue<Integer>[] buckets = new Queue[19]; // for negative and positive ints
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i] = new LinkedList<>();
+        }
+        int max = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        int k = digitCount(max);
+
+        for (int i = 0; i < k; i++) {
+            int pow = 10;
+            for (int value : arr) {
+                int n;
+                if (i == 0) {
+                    n = value % 10;
+                } else {
+                    pow = (int) Math.pow(pow, i);
+                    n = value / pow;
+                }
+                buckets[n].offer(value);
+            }
+            int idx = 0;
+            for (Queue<Integer> bucket : buckets) {
+                while (!bucket.isEmpty()) {
+                    arr[idx++] = bucket.remove();
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets the digit count from a number by dividing the number by powers of two.
+     *
+     * @param number input number.
+     * @return length of number.
+     */
+    private static int digitCount(int number) {
+        int len = 1;
+        if (number >= 100_000_000) {
+            len += 8;
+            number /= 100_000_000;
+        }
+        if (number >= 10_000) {
+            len += 4;
+            number /= 10_000;
+        }
+        if (number >= 100) {
+            len += 2;
+            number /= 100;
+        }
+        if (number >= 10) {
+            len += 1;
+        }
+        return len;
+    }
+
     private static <T> void swap(T[] arr, int i1, int i2) {
         T temp = arr[i1];
-        T temp2 = arr[i2];
-        arr[i1] =  temp2;
+        arr[i1] =  arr[i2];
         arr[i2] = temp;
     }
 
@@ -107,19 +167,25 @@ public class DivideAndConquerSort {
         for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
             Integer[] input = Arrays.copyOf(c.getKey(), c.getKey().length);
             mergeSort(input, Integer::compare);
-            if (!Arrays.equals(input, c.getValue())) {
-                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
-                throw new RuntimeException();
-            }
+            verify(c, input);
             System.out.println("merge passed: " + Arrays.toString(c.getKey()));
 
             input = Arrays.copyOf(c.getKey(), c.getKey().length);
             quickSort(input, 0, input.length - 1, Integer::compare);
-            if (!Arrays.equals(input, c.getValue())) {
-                System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
-                throw new RuntimeException();
-            }
+            verify(c, input);
             System.out.println("quick passed: " + Arrays.toString(c.getKey()));
+
+            input = Arrays.copyOf(c.getKey(), c.getKey().length);
+            lsdRadixSort(input);
+            verify(c, input);
+            System.out.println("lsd radix passed: " + Arrays.toString(c.getKey()));
+        }
+    }
+
+    private static void verify(Map.Entry<Integer[], Integer[]> c, Integer[] input) {
+        if (!Arrays.equals(input, c.getValue())) {
+            System.out.println("original: " + Arrays.toString(c.getKey()) + "\noutput: " + Arrays.toString(input));
+            throw new RuntimeException();
         }
     }
 }
