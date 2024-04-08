@@ -21,4 +21,5 @@
 #### [Selection sort](https://github.com/jollyboss123/gtx-cs1332x/blob/main/src/gtxcs1332x/module10/IterativeSort.java)
 #### [Cocktail shaker sort](https://github.com/jollyboss123/gtx-cs1332x/blob/main/src/gtxcs1332x/module10/IterativeSort.java)
 #### [Merge sort](https://github.com/jollyboss123/gtx-cs1332x/blob/main/src/gtxcs1332x/module11/DivideAndConquerSort.java)
+#### [Quick sort](https://github.com/jollyboss123/gtx-cs1332x/blob/main/src/gtxcs1332x/module11/DivideAndConquerSort.java)
 
