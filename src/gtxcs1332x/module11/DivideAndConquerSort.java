@@ -99,8 +99,10 @@ public class DivideAndConquerSort {
         }
         int max = arr[0];
         for (int i = 1; i < arr.length; i++) {
-            if (arr[i] > max) {
-                max = arr[i];
+            // to compare both negative and positive ints
+            int curr = Math.abs(arr[i]);
+            if (curr > max) {
+                max = curr;
             }
         }
         int k = digitCount(max);
@@ -169,7 +171,7 @@ public class DivideAndConquerSort {
         cases.put(new Integer[]{1, 2, 3, 4, 5, 6}, new Integer[]{1, 2, 3, 4, 5, 6});
         cases.put(new Integer[]{6, 5, 4, 3, 2, 1}, new Integer[]{1, 2, 3, 4, 5, 6});
         cases.put(new Integer[]{5268, 8362, 8010, 2229, 7651, 8555, 347, 4968, 7278, 9742}, new Integer[]{347, 2229, 4968, 5268, 7278, 7651, 8010, 8362, 8555, 9742});
-        cases.put(new Integer[]{5268, 8362, 8010, 2229, 7651, 8555, 347, 4968, 7278, -9742}, new Integer[]{-9742, 347, 2229, 4968, 5268, 7278, 7651, 8010, 8362, 8555});
+        cases.put(new Integer[]{5268, 8362, 8010, 2229, 7651, 8555, 347, 4968, 7278, -97421, -37}, new Integer[]{-97421, -37, 347, 2229, 4968, 5268, 7278, 7651, 8010, 8362, 8555});
 
         for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
             Integer[] input = Arrays.copyOf(c.getKey(), c.getKey().length);
