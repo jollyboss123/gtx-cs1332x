@@ -115,6 +115,11 @@ public class DivideAndConquerSort {
                     int pow = (int) Math.pow(base, i);
                     n = (value / pow) % 10;
                 }
+                if (n >= 0) {
+                    n += 9;
+                } else {
+                    n = Math.abs(n) % 9;
+                }
                 buckets[n].offer(value);
             }
             int idx = 0;
@@ -164,6 +169,7 @@ public class DivideAndConquerSort {
         cases.put(new Integer[]{1, 2, 3, 4, 5, 6}, new Integer[]{1, 2, 3, 4, 5, 6});
         cases.put(new Integer[]{6, 5, 4, 3, 2, 1}, new Integer[]{1, 2, 3, 4, 5, 6});
         cases.put(new Integer[]{5268, 8362, 8010, 2229, 7651, 8555, 347, 4968, 7278, 9742}, new Integer[]{347, 2229, 4968, 5268, 7278, 7651, 8010, 8362, 8555, 9742});
+        cases.put(new Integer[]{5268, 8362, 8010, 2229, 7651, 8555, 347, 4968, 7278, -9742}, new Integer[]{-9742, 347, 2229, 4968, 5268, 7278, 7651, 8010, 8362, 8555});
 
         for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
             Integer[] input = Arrays.copyOf(c.getKey(), c.getKey().length);
