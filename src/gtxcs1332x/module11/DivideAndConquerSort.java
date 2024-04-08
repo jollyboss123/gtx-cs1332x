@@ -105,15 +105,15 @@ public class DivideAndConquerSort {
         }
         int k = digitCount(max);
 
+        int base = 10;
         for (int i = 0; i < k; i++) {
-            int pow = 10;
             for (int value : arr) {
                 int n;
                 if (i == 0) {
                     n = value % 10;
                 } else {
-                    pow = (int) Math.pow(pow, i);
-                    n = value / pow;
+                    int pow = (int) Math.pow(base, i);
+                    n = (value / pow) % 10;
                 }
                 buckets[n].offer(value);
             }
@@ -163,6 +163,7 @@ public class DivideAndConquerSort {
         cases.put(new Integer[]{5, 7, 8, 9, 3, 6, 4, 6, 2}, new Integer[]{2, 3, 4, 5, 6, 6, 7, 8, 9});
         cases.put(new Integer[]{1, 2, 3, 4, 5, 6}, new Integer[]{1, 2, 3, 4, 5, 6});
         cases.put(new Integer[]{6, 5, 4, 3, 2, 1}, new Integer[]{1, 2, 3, 4, 5, 6});
+        cases.put(new Integer[]{5268, 8362, 8010, 2229, 7651, 8555, 347, 4968, 7278, 9742}, new Integer[]{347, 2229, 4968, 5268, 7278, 7651, 8010, 8362, 8555, 9742});
 
         for (Map.Entry<Integer[], Integer[]> c : cases.entrySet()) {
             Integer[] input = Arrays.copyOf(c.getKey(), c.getKey().length);
